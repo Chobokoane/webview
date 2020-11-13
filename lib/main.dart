@@ -19,7 +19,20 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  InAppWebViewController webView;
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +41,10 @@ class MyHomePage extends StatelessWidget {
       child:InAppWebView(
         initialFile: "assets/index.html",
         initialHeaders: {},
-        initialOptions: InAppWebViewWidgetOptions(
-          inAppWebViewOptions: InAppWebViewOptions(
-            debuggingEnabled: true,
-          ),
+        initialOptions: InAppWebViewGroupOptions(
+            crossPlatform: InAppWebViewOptions(
+              debuggingEnabled: true,
+            )
         ),
         onWebViewCreated: (InAppWebViewController controller) {
           webView = controller;
@@ -47,5 +60,11 @@ class MyHomePage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    webView = null;
+    super.dispose();
   }
 }
